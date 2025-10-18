@@ -1,46 +1,31 @@
 import pygame
-import sys
+import time
+import random
 
-pygame.init()
-screen = pygame.display.set_mode((600, 400))
-pygame.display.set_caption("Herencia Simple en Pygame")
-clock = pygame.time.Clock()
+WIDTH, HEIGHT = 1920, 1080
+WIN = pygame.display.set_mode((WIDTH, HEIGHT))
+pygame.display.set_caption("Tank 1990")
 
-# Clase base
-class Entidad:
-    def __init__(self, x, y, width, height):
-        self.rect = pygame.Rect(x, y, width, height)
+BG = pygame.transform.scale(pygame.image.load("bg.jpg"), (  WIDTH, HEIGHT))
 
-    def draw(self, screen, color):
-        pygame.draw.rect(screen, color, self.rect)
+#Montamos el background
+def draw():
+    WIN.blit(BG, (0,0))
+    pygame.display.update()
 
-# Clase derivada
-class Jugador(Entidad):
-    def mover(self, dx, dy):
-        self.rect.x += dx
-        self.rect.y += dy
 
-player = Jugador(100, 100, 50, 50)
-color = (0, 128, 255)
+def main():
+    run = True
 
-# Bucle principal del juego
-while True:
-    for event in pygame.event.get():
-        if event.type == pygame.QUIT:
-            pygame.quit()
-            sys.exit()
+    while run:
+        for event in pygame.event.get():
+            if event.type == pygame.QUIT:
+                run = False
+                break
+        draw()
 
-    keys = pygame.key.get_pressed()
-    if keys[pygame.K_LEFT]:
-        player.mover(-5, 0)
-    if keys[pygame.K_RIGHT]:
-        player.mover(5, 0)
-    if keys[pygame.K_UP]:
-        player.mover(0, -5)
-    if keys[pygame.K_DOWN]:
-        player.mover(0, 5)
+    pygame.quit()
 
-    screen.fill((0, 0, 0))
-    player.draw(screen, color)
-    pygame.display.flip()
-    clock.tick(30)
+if __name__ == "__main__":
+    main()
+
